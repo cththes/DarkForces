@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { drawCardActionCreator } from "../../redux/people-reducer";
+import { drawCard } from "../../redux/people-reducer";
 import { getCards } from "../../redux/people-selector";
 
 const People = ({ StrengthPoints }) => {
@@ -13,7 +13,7 @@ const People = ({ StrengthPoints }) => {
   const onButtonClick = (currentCard) => {
     if (isFinite(currentCard)) {
       if (sumOfNumbers + currentCard <= 21) {
-        dispatch(drawCardActionCreator(currentCard));
+        dispatch(drawCard(currentCard));
       } else alert(sumOfNumbers + currentCard + " перебор");
       /*if (sumOfNumbers + currentCard > 21) {
         alert(sumOfNumbers + currentCard + " перебор");

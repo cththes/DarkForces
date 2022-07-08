@@ -1,5 +1,5 @@
 export const getPeople = (state) => {
-  return state.peopleReducer.people;
+  return state.peopleReducer.PeopleObject;
 };
 
 export const getCards = (state) => {
