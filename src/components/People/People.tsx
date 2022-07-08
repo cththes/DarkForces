@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { drawCard } from "../../redux/people-reducer";
 import { getCards } from "../../redux/people-selector";
 
-const People = ({ StrengthPoints }) => {
-  let onHandCards = useSelector((state) => getCards(state));
-  let rand = Math.floor(Math.random() * StrengthPoints.length);
-  let currentCard = StrengthPoints[rand];
-  const sumOfNumbers = onHandCards.reduce((acc, number) => acc + number, 0);
+type PropsType = {
+  StrengthPoints: Array<number>
+}
+
+const People: React.FC<PropsType> = ({ StrengthPoints }) => {
+  let onHandCards: Array<number> = useSelector((state) => getCards(state));
+  let rand: number = Math.floor(Math.random() * StrengthPoints.length);
+  let currentCard: number = StrengthPoints[rand];
+  const sumOfNumbers: number = onHandCards.reduce((acc, number) => acc + number, 0);
 
   let dispatch = useDispatch();
-  const onButtonClick = (currentCard) => {
+  const onButtonClick = (currentCard: number) => {
     if (isFinite(currentCard)) {
       if (sumOfNumbers + currentCard <= 21) {
         dispatch(drawCard(currentCard));

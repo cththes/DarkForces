@@ -1,23 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { peopleAPI } from "../api/api";
+import { AllPeopleType, PeopleWithStrengthType } from "../types/types";
+
+type PeopleReducerType = typeof peopleReducer
 
 const peopleReducer = createSlice({
   name: "peopleReducer",
   initialState: {
     PeopleObject: {
-      AllPeople: [],
-      PeopleWithStrength: [], //real Jedi
-      Strength: [], //mass * height
-      StrengthPoints: [], //Strength * 10 / maxStrength; integer points from 1 to 10
+      AllPeople: [] as Array<AllPeopleType>,
+      PeopleWithStrength: [] as Array<PeopleWithStrengthType>, //real Jedi
+      Strength: [] as Array<number>, //mass * height
+      StrengthPoints: [] as Array<number>, //Strength * 10 / maxStrength; integer points from 1 to 10
     },
     currentCard: 0,
-    onHandCards: [],
+    onHandCards: [0] as Array<number>,
   },
   reducers: {
     setPeople(state, action) {
       state.PeopleObject.AllPeople = action.payload;
-      state.PeopleObject.AllPeople.forEach((el) => {
-        let strength = el.mass * el.height;
+      state.PeopleObject.AllPeople.forEach((el: any) => {
+        let strength: number = el.mass * el.height;
         if (isFinite(strength)) {
           state.PeopleObject.PeopleWithStrength.push(el);
           state.PeopleObject.Strength.push(strength);

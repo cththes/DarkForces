@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import People from "./People";
 import { getPeople } from "../../redux/people-selector";
 import { requestPeople, setPeople } from "../../redux/people-reducer";
+import { RequestPeopleResultsType } from "../../types/types";
 
 const PeopleContainer = () => {
   let dispatch = useDispatch();
@@ -11,9 +12,10 @@ const PeopleContainer = () => {
     if (shouldDispatch.current) {
       shouldDispatch.current = false;
       requestPeople().then((responses) => {
-        let results = [];
+        let results: Array<RequestPeopleResultsType> = [];
         responses.forEach((page) => {
           results = [...results, ...page.data.results];
+          console.log("results", results);
         });
         dispatch(setPeople(results));
       });
