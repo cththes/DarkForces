@@ -1,43 +1,65 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { drawCard } from "../../redux/people-reducer";
-import { getCards } from "../../redux/people-selector";
+import styles from './People.module.css'
+import { useDispatch } from "react-redux";
+import { drawCard, nextMove } from "../../redux/people-reducer";
 
 type PropsType = {
   StrengthPoints: Array<number>
+  onHandCards: Array<number>
+  currentCardDeckNumber: number
+  currentPlayerNumber: number
 }
 
-const People: React.FC<PropsType> = ({ StrengthPoints }) => {
-  let onHandCards: Array<number> = useSelector((state) => getCards(state));
+const People: React.FC<PropsType> = ({ StrengthPoints, onHandCards, currentCardDeckNumber, currentPlayerNumber }) => {
+
   let rand: number = Math.floor(Math.random() * StrengthPoints.length);
   let currentCard: number = StrengthPoints[rand];
   const sumOfNumbers: number = onHandCards.reduce((acc, number) => acc + number, 0);
 
   let dispatch = useDispatch();
-  const onButtonClick = (currentCard: number) => {
+  const onDrawCardButtonClick = (currentCard: number) => {
     if (isFinite(currentCard)) {
-      if (sumOfNumbers + currentCard <= 21) {
+      if (sumOfNumbers <= 21) {
         dispatch(drawCard(currentCard));
-      } else alert(sumOfNumbers + currentCard + " перебор");
+        if (sumOfNumbers + currentCard > 21) {
+          alert(sumOfNumbers + "перебор")
+          dispatch(nextMove())
+        }
+      }
       /*if (sumOfNumbers + currentCard > 21) {
         alert(sumOfNumbers + currentCard + " перебор");
       }*/
     }
   };
 
+  const onNextMoveButtonClick = () => {
+    dispatch(nextMove())
+  }
+
   return (
     <div>
-      <button
-        onClick={() => {
-          onButtonClick(currentCard);
-        }}
-      >
-        Вытянуть карту
-      </button>
-      <span>Сумма: {sumOfNumbers}</span>
       <div>
+        <button
+          onClick={() => {
+            onDrawCardButtonClick(currentCard);
+          }}
+        >
+          Вытянуть карту
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            onNextMoveButtonClick();
+          }}
+        >
+          Закончить ход
+        </button>
+      </div>
+      <span>Колода №{currentCardDeckNumber} игрока №{currentPlayerNumber}: {sumOfNumbers}</span>
+      <div className={styles.CardDecks}>
         {onHandCards.map((el) => (
-          <div>
+          <div className={styles.CardDeck}>
             {el}
             <br />
           </div>

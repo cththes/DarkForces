@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { peopleAPI } from "../api/api";
-import { AllPeopleType, PeopleWithStrengthType } from "../types/types";
-
-type PeopleReducerType = typeof peopleReducer
+import { AllPeopleType, PeopleWithStrengthType, PlayersType } from "../types/types";
 
 const peopleReducer = createSlice({
   name: "peopleReducer",
@@ -13,8 +11,10 @@ const peopleReducer = createSlice({
       Strength: [] as Array<number>, //mass * height
       StrengthPoints: [] as Array<number>, //Strength * 10 / maxStrength; integer points from 1 to 10
     },
+    currentPlayerNumber: 0,
+    currentCardDeckNumber: 0,
     currentCard: 0,
-    onHandCards: [0] as Array<number>,
+    players: [[[], [], []], [[], [], []]] as Array<PlayersType>,
   },
   reducers: {
     setPeople(state, action) {
@@ -36,7 +36,19 @@ const peopleReducer = createSlice({
     },
     drawCard(state, action) {
       state.currentCard = action.payload;
-      state.onHandCards.push(action.payload);
+      state.players[state.currentPlayerNumber][state.currentCardDeckNumber].push(action.payload);
+    },
+    nextMove(state) {
+      if (state.currentCardDeckNumber < 3) {
+        if (state.currentPlayerNumber === 0)
+          state.currentPlayerNumber = 1
+        else {
+          state.currentPlayerNumber = 0
+          state.currentCardDeckNumber++
+        }
+      }
+      else alert('Игра окончена')
+
     },
   },
 });
@@ -46,4 +58,4 @@ export const requestPeople = () => {
 };
 
 export default peopleReducer.reducer;
-export const { setPeople, drawCard } = peopleReducer.actions;
+export const { setPeople, drawCard, nextMove } = peopleReducer.actions;

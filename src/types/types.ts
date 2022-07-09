@@ -1,6 +1,4 @@
-export type PeopleType = {
-
-}
+export type PlayersType = Array<Array<Array<number>>>
 
 export type AllPeopleType = {
    name: string
