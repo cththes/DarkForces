@@ -24,8 +24,11 @@ const PeopleContainer = () => {
     }
 
   }, []);
+  console.log(PeopleObject)
   return <People
     StrengthPoints={PeopleObject.StrengthPoints}
+    PeopleWithStrength={PeopleObject.PeopleWithStrength}
+    CardNames={PeopleObject.CardNames}
     onHandCards={onHandCards}
     AllCards={AllCards}
     playerCardSum={playerCardSum}
