@@ -1,4 +1,23 @@
+.main_content {
+  max-width: 100%;
+}
+
+.header {
+  display: flex;
+  height: 25vh;
+}
+
+.info {
+  width: 45%;
+}
+
 .CardDecks {
-  background-color: red;
-  margin-top: 150px;
+  display: grid;
+  margin-left: 7%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 30vh 30vh;
+}
+
+.bust {
+  color: red;
 }

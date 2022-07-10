@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import People from "./People";
-import { getCardDeckNumber, getCards, getPeople, getPlayerNumber } from "../../redux/people-selector";
+import { getAllCards, getCards, getDeckCardSum, getPeople, getPlayerCardSum } from "../../redux/people-selector";
 import { requestPeople, setPeople } from "../../redux/people-reducer";
 import { RequestPeopleResultsType } from "../../types/types";
 
@@ -9,9 +9,9 @@ const PeopleContainer = () => {
   let dispatch = useDispatch();
   let PeopleObject = useSelector((state) => getPeople(state));
   let onHandCards = useSelector((state) => getCards(state));
-  let currentCardDeckNumber = useSelector((state) => getCardDeckNumber(state));
-  let currentPlayerNumber = useSelector((state) => getPlayerNumber(state));
-
+  let AllCards = useSelector((state) => getAllCards(state))
+  let playerCardSum = useSelector((state) => getPlayerCardSum(state))
+  let deckCardSum = useSelector((state) => getDeckCardSum(state))
   useEffect(() => {
     if (PeopleObject.AllPeople.length === 0) {
       requestPeople().then((responses) => {
@@ -24,12 +24,12 @@ const PeopleContainer = () => {
     }
 
   }, []);
-
   return <People
     StrengthPoints={PeopleObject.StrengthPoints}
     onHandCards={onHandCards}
-    currentCardDeckNumber={currentCardDeckNumber}
-    currentPlayerNumber={currentPlayerNumber}
+    AllCards={AllCards}
+    playerCardSum={playerCardSum}
+    deckCardSum={deckCardSum}
   />;
 };
 

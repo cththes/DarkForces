@@ -13,3 +13,14 @@ export const getCardDeckNumber = (state) => {
 export const getPlayerNumber = (state) => {
   return state.peopleReducer.currentPlayerNumber;
 };
+
+export const getAllCards = (state) => {
+  return state.peopleReducer.players;
+};
+
+export const getPlayerCardSum = (state) => {
+  return state.peopleReducer.playerCardSum;
+};
+export const getDeckCardSum = (state) => {
+  return state.peopleReducer.deckCardSum;
+};

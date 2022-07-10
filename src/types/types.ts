@@ -1,4 +1,5 @@
 export type PlayersType = Array<Array<Array<number>>>
+export type AllCardsType = PlayersType
 
 export type AllPeopleType = {
    name: string
@@ -20,3 +21,4 @@ export type AllPeopleType = {
 }
 export type PeopleWithStrengthType = AllPeopleType
 export type RequestPeopleResultsType = AllPeopleType
+

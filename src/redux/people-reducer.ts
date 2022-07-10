@@ -14,7 +14,9 @@ const peopleReducer = createSlice({
     currentPlayerNumber: 0,
     currentCardDeckNumber: 0,
     currentCard: 0,
-    players: [[[], [], []], [[], [], []]] as Array<PlayersType>,
+    players: [[[], [], []], [[], [], []]] as PlayersType,
+    deckCardSum: [[0, 0, 0], [0, 0, 0]],
+    playerCardSum: [0, 0]
   },
   reducers: {
     setPeople(state, action) {
@@ -37,6 +39,8 @@ const peopleReducer = createSlice({
     drawCard(state, action) {
       state.currentCard = action.payload;
       state.players[state.currentPlayerNumber][state.currentCardDeckNumber].push(action.payload);
+      state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber] += action.payload
+      state.playerCardSum[state.currentPlayerNumber] += action.payload
     },
     nextMove(state) {
       if (state.currentCardDeckNumber < 3) {
@@ -48,8 +52,11 @@ const peopleReducer = createSlice({
         }
       }
       else alert('Игра окончена')
-
     },
+    minusPoints(state) {
+      state.playerCardSum[state.currentPlayerNumber] -= --state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber]
+      state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber] = 1
+    }
   },
 });
 
@@ -58,4 +65,4 @@ export const requestPeople = () => {
 };
 
 export default peopleReducer.reducer;
-export const { setPeople, drawCard, nextMove } = peopleReducer.actions;
+export const { setPeople, drawCard, nextMove, minusPoints } = peopleReducer.actions;
