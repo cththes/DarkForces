@@ -15,6 +15,7 @@ const peopleReducer = createSlice({
     currentPlayerNumber: 0,
     currentCardDeckNumber: 0,
     currentCard: 0,
+    isGameOver: false,
     players: [[[], [], []], [[], [], []]] as PlayersType,
     deckCardSum: [[0, 0, 0], [0, 0, 0]],
     playerCardSum: [0, 0]
@@ -53,16 +54,19 @@ const peopleReducer = createSlice({
       state.PeopleObject.PeopleWithStrength.pop()
     },
     nextMove(state) {
-      if (state.currentCardDeckNumber < 3) {
-        if (state.currentPlayerNumber === 0)
-          state.currentPlayerNumber = 1
-        else {
-          state.currentPlayerNumber = 0
+      if ((state.currentPlayerNumber === 1) && (state.currentCardDeckNumber === 2)) {
+        state.isGameOver = true
+      }
+      if (state.currentPlayerNumber === 0)
+        state.currentPlayerNumber = 1
+      else {
+        state.currentPlayerNumber = 0
+        if (state.currentCardDeckNumber < 2)
           state.currentCardDeckNumber++
-        }
       }
     },
     clear(state) {
+      state.isGameOver = false
       state.currentPlayerNumber = 0
       state.currentCardDeckNumber = 0
       state.currentCard = 0

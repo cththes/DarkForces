@@ -6,7 +6,6 @@ import { AllCardsType, PeopleWithStrengthType } from "../../types/types";
 
 type PropsType = {
   StrengthPoints: Array<number>
-  onHandCards: Array<number>
   AllCards: AllCardsType
   playerCardSum: Array<Number>
   deckCardSum: Array<Array<Number>>
@@ -14,25 +13,23 @@ type PropsType = {
   CardNames: Array<string>
   DeckCardNumber: any,
   PlayerNumber: any,
+  isGameOver: boolean,
 }
 
 const People: React.FC<PropsType> = ({
   StrengthPoints,
-  onHandCards,
   AllCards,
   playerCardSum,
   deckCardSum,
-  PeopleWithStrength,
   CardNames,
   DeckCardNumber,
   PlayerNumber,
+  isGameOver
 }) => {
 
   let rand: number = Math.floor(Math.random() * StrengthPoints.length);
   let currentCard: number = StrengthPoints[rand];
   const sumOfCurrentHandCards: number = AllCards[PlayerNumber][DeckCardNumber].reduce((acc, number) => acc + number, 0);
-
-
   let dispatch = useDispatch();
   const onDrawCardButtonClick = (currentCard: number) => {
     if (isFinite(currentCard)) {
@@ -57,12 +54,22 @@ const People: React.FC<PropsType> = ({
     dispatch(clear())
     dispatch(setPeople())
   }
+  DeckCardNumber = 0
+  PlayerNumber = 0
   return (
     <div className={styles.main_content}>
       <div className={styles.header}>
         <div className={styles.info}>
           <div>{"Очки игрока №1: " + playerCardSum[0]}</div>
           <div>{"Очки игрока №2: " + playerCardSum[1]}</div>
+          {isGameOver && <div>
+            <div className={styles.gameOver}>Игра окончена.</div>
+            <button onClick={() => {
+              onClearButtonClick();
+            }}
+            >
+              Начать заново?</button>
+          </div>}
           { }
         </div>
         <div className={styles.navbar}>
