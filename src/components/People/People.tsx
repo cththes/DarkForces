@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './People.module.css'
 import { useDispatch } from "react-redux";
-import { deleteCard, drawCard, minusPoints, nextMove } from "../../redux/people-reducer";
+import { clear, deleteCard, drawCard, minusPoints, nextMove, setPeople } from "../../redux/people-reducer";
 import { AllCardsType, PeopleWithStrengthType } from "../../types/types";
 
 type PropsType = {
@@ -12,6 +12,8 @@ type PropsType = {
   deckCardSum: Array<Array<Number>>
   PeopleWithStrength: PeopleWithStrengthType
   CardNames: Array<string>
+  DeckCardNumber: any,
+  PlayerNumber: any,
 }
 
 const People: React.FC<PropsType> = ({
@@ -21,24 +23,28 @@ const People: React.FC<PropsType> = ({
   playerCardSum,
   deckCardSum,
   PeopleWithStrength,
-  CardNames
+  CardNames,
+  DeckCardNumber,
+  PlayerNumber,
 }) => {
 
   let rand: number = Math.floor(Math.random() * StrengthPoints.length);
   let currentCard: number = StrengthPoints[rand];
-  const sumOfNumbers: number = onHandCards.reduce((acc, number) => acc + number, 0);
-  let deckSum = sumOfNumbers
+  const sumOfCurrentHandCards: number = AllCards[PlayerNumber][DeckCardNumber].reduce((acc, number) => acc + number, 0);
 
 
   let dispatch = useDispatch();
   const onDrawCardButtonClick = (currentCard: number) => {
     if (isFinite(currentCard)) {
-      if (sumOfNumbers <= 21) {
+      if (sumOfCurrentHandCards <= 21) {
         dispatch(drawCard(currentCard));
         dispatch(deleteCard(rand))
-        if (sumOfNumbers + currentCard > 21) {
-          dispatch(minusPoints())
+        if (sumOfCurrentHandCards + currentCard >= 21) {
+          if (sumOfCurrentHandCards + currentCard > 21) {
+            dispatch(minusPoints())
+          }
           dispatch(nextMove())
+
         }
       }
     }
@@ -46,6 +52,10 @@ const People: React.FC<PropsType> = ({
 
   const onNextMoveButtonClick = () => {
     dispatch(nextMove())
+  }
+  const onClearButtonClick = () => {
+    dispatch(clear())
+    dispatch(setPeople())
   }
   return (
     <div className={styles.main_content}>
@@ -73,6 +83,15 @@ const People: React.FC<PropsType> = ({
             Закончить ход
           </button>
         </div>
+        <div>
+          <button
+            onClick={() => {
+              onClearButtonClick();
+            }}
+          >
+            Начать заново
+          </button>
+        </div>
       </div>
       <div className={styles.CardDecks}>
         {AllCards.map(player => player.map(deck => (
@@ -82,7 +101,7 @@ const People: React.FC<PropsType> = ({
             {deck.map(card => <div className={styles.deck}>
               {CardNames[card]} {card}
             </div>)}
-            {deckSum > 21 && <div className={styles.bust}>перебор</div>}
+            {/*sumOfNumbers > 21 && <div className={styles.bust}>перебор</div>*/}
           </div>
         )
         ))

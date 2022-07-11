@@ -20,8 +20,10 @@ const peopleReducer = createSlice({
     playerCardSum: [0, 0]
   },
   reducers: {
-    setPeople(state, action) {
+    setAllPeople(state, action) {
       state.PeopleObject.AllPeople = action.payload;
+    },
+    setPeople(state) {
       state.PeopleObject.PeopleWithStrength = []
       state.PeopleObject.Strength = []
       state.PeopleObject.CardNames = []
@@ -48,9 +50,7 @@ const peopleReducer = createSlice({
       state.playerCardSum[state.currentPlayerNumber] += action.payload
     },
     deleteCard(state, action) {
-      console.log("state.PeopleObject.PeopleWithStrength.length", state.PeopleObject.PeopleWithStrength.length)
       state.PeopleObject.PeopleWithStrength.pop()
-      console.log("state.PeopleObject.PeopleWithStrength.length", state.PeopleObject.PeopleWithStrength.length)
     },
     nextMove(state) {
       if (state.currentCardDeckNumber < 3) {
@@ -62,15 +62,24 @@ const peopleReducer = createSlice({
         }
       }
     },
+    clear(state) {
+      state.currentPlayerNumber = 0
+      state.currentCardDeckNumber = 0
+      state.currentCard = 0
+      state.players = [[[], [], []], [[], [], []]]
+      state.deckCardSum = [[0, 0, 0], [0, 0, 0]]
+      state.playerCardSum = [0, 0]
+    },
     minusPoints(state) {
       state.playerCardSum[state.currentPlayerNumber] -= --state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber]
     },
-  },
-});
+  }
+}
+);
 
 export const requestPeople = () => {
   return peopleAPI.getPeople();
 };
 
 export default peopleReducer.reducer;
-export const { setPeople, drawCard, nextMove, minusPoints, deleteCard } = peopleReducer.actions;
+export const { setAllPeople, setPeople, drawCard, nextMove, minusPoints, deleteCard, clear } = peopleReducer.actions;

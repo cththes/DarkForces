@@ -1,3 +1,7 @@
+export const getState = (state) => {
+  return state.peopleReducer;
+};
+
 export const getPeople = (state) => {
   return state.peopleReducer.PeopleObject;
 };
