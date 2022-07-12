@@ -29,6 +29,10 @@ export const getDeckCardSum = (state) => {
   return state.peopleReducer.deckCardSum;
 };
 
+export const getSumOfCurrentCards = (state) => {
+  return state.peopleReducer.sumOfCurrentHandCards;
+};
+
 export const getIsGameOver = (state) => {
   return state.peopleReducer.isGameOver;
 };

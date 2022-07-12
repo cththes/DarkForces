@@ -8,7 +8,7 @@
 }
 
 .info {
-  width: 45%;
+  width: 42%;
 }
 
 .CardDecks {
@@ -19,9 +19,5 @@
 }
 
 .bust {
-  color: red;
-}
-
-.gameOver {
   color: red;
 }

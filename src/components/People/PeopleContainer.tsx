@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import People from "./People";
-import { getAllCards, getCardDeckNumber, getDeckCardSum, getIsGameOver, getPeople, getPlayerCardSum, getPlayerNumber, getState } from "../../redux/people-selector";
+import { getAllCards, getCardDeckNumber, getDeckCardSum, getIsGameOver, getPeople, getPlayerCardSum, getPlayerNumber, getSumOfCurrentCards } from "../../redux/people-selector";
 import { setAllPeople, requestPeople, setPeople } from "../../redux/people-reducer";
 import { RequestPeopleResultsType } from "../../types/types";
 
 const PeopleContainer = () => {
-  let dispatch = useDispatch();
-  let PeopleObject = useSelector((state) => getPeople(state));
-  let AllCards = useSelector((state) => getAllCards(state))
-  let playerCardSum = useSelector((state) => getPlayerCardSum(state))
-  let deckCardSum = useSelector((state) => getDeckCardSum(state))
-  let DeckCardNumber = useSelector((state) => getCardDeckNumber(state))
-  let PlayerNumber = useSelector((state) => getPlayerNumber(state))
-  let isGameOver = useSelector((state) => getIsGameOver(state))
-
+  const dispatch = useDispatch();
+  const PeopleObject = useSelector((state) => getPeople(state));
+  const AllCards = useSelector((state) => getAllCards(state))
+  const playerCardSum = useSelector((state) => getPlayerCardSum(state))
+  const deckCardSum = useSelector((state) => getDeckCardSum(state))
+  const DeckCardNumber = useSelector((state) => getCardDeckNumber(state))
+  const PlayerNumber = useSelector((state) => getPlayerNumber(state))
+  const isGameOver = useSelector((state) => getIsGameOver(state))
+  const sumOfCurrentHandCards = useSelector((state) => getSumOfCurrentCards(state))
 
   useEffect(() => {
     if (PeopleObject.AllPeople.length === 0) {
@@ -39,6 +39,7 @@ const PeopleContainer = () => {
     DeckCardNumber={DeckCardNumber}
     PlayerNumber={PlayerNumber}
     isGameOver={isGameOver}
+    sumOfCurrentHandCards={sumOfCurrentHandCards}
   />;
 };
 
