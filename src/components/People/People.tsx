@@ -1,8 +1,8 @@
 import React from "react";
 import styles from './People.module.css'
 import { useDispatch } from "react-redux";
-import { clear, deleteCard, drawCard, minusPoints, nextMove, setPeople } from "../../redux/people-reducer";
-import { AllCardsType, PeopleWithStrengthType } from "../../types/types";
+import { clear, deleteCard, drawCard, nextMove, setPeople } from "../../redux/people-reducer";
+import { AllCardsType, PeopleWithStrengthType, CurrentCardType } from "../../types/types";
 import Gameover from "./Gameover/Gameover";
 
 type PropsType = {
@@ -23,21 +23,22 @@ const People: React.FC<PropsType> = ({
   AllCards,
   playerCardSum,
   deckCardSum,
-  CardNames,
-  DeckCardNumber,
   PlayerNumber,
   isGameOver,
-  sumOfCurrentHandCards
+  PeopleWithStrength
 }) => {
 
   let rand: number = Math.floor(Math.random() * StrengthPoints.length);
-  let currentCard: number = StrengthPoints[rand];
+  let currentCard = {} as any
+  currentCard.Points = StrengthPoints[rand]
+  currentCard.Name = PeopleWithStrength[rand].name
   let dispatch = useDispatch();
 
 
-  const onDrawCardButtonClick = (currentCard: number) => {
-    if (isFinite(currentCard)) {
+  const onDrawCardButtonClick = (currentCard: CurrentCardType) => {
+    if (isFinite(currentCard.Points)) {
       dispatch(drawCard(currentCard))
+      dispatch(deleteCard(rand))
     }
   };
 
@@ -91,7 +92,7 @@ const People: React.FC<PropsType> = ({
             Колода {player.indexOf(deck) + 1 + " "}
             игрока {AllCards.indexOf(player) + 1 + " : " + deckCardSum[AllCards.indexOf(player)][player.indexOf(deck)]}
             {deck.map(card => <div className={styles.deck}>
-              {CardNames[card]} {card}
+              {card.Name} {card.Points}
             </div>)}
             {deckCardSum[AllCards.indexOf(player)][player.indexOf(deck)] > 21 && <div className={styles.bust}>Перебор</div>}
           </div>

@@ -1,7 +1,7 @@
-export type PlayersType = Array<Array<Array<number>>>
+export type PlayersType = Array<Array<Array<CurrentCardType>>>
 export type AllCardsType = PlayersType
 
-export type AllPeopleType = {
+export type AllPeopleType = Array<{
    name: string
    height: string
    mass: string
@@ -18,6 +18,10 @@ export type AllPeopleType = {
    created: string
    edited: string
    url: string
+}>
+
+export type CurrentCardType = {
+   Points: number, Name: string
 }
 export type PeopleWithStrengthType = AllPeopleType
 export type RequestPeopleResultsType = AllPeopleType

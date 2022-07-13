@@ -15,6 +15,7 @@ const peopleReducer = createSlice({
     currentPlayerNumber: 0,
     currentCardDeckNumber: 0,
     currentCard: 0,
+    currentCardNumber: 0,
     sumOfCurrentHandCards: 0,
     isGameOver: false,
     players: [[[], [], []], [[], [], []]] as PlayersType,
@@ -46,12 +47,13 @@ const peopleReducer = createSlice({
       });
     },
     drawCard(state, action) {
-      state.currentCard = action.payload;
+      state.currentCard = action.payload.Points;
       state.players[state.currentPlayerNumber][state.currentCardDeckNumber].push(action.payload);
-      state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber] += action.payload
-      state.playerCardSum[state.currentPlayerNumber] += action.payload
-      state.sumOfCurrentHandCards += action.payload
+      state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber] += action.payload.Points
+      state.playerCardSum[state.currentPlayerNumber] += action.payload.Points
+      state.sumOfCurrentHandCards += action.payload.Points
       if (state.sumOfCurrentHandCards >= 21) {
+
         if (state.sumOfCurrentHandCards > 21) {
           state.playerCardSum[state.currentPlayerNumber] -= --state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber]
           state.sumOfCurrentHandCards = 0
@@ -68,9 +70,6 @@ const peopleReducer = createSlice({
             state.currentCardDeckNumber++
         }
       }
-    },
-    deleteCard(state, action) {
-
     },
     nextMove(state) {
       state.sumOfCurrentHandCards = 0
@@ -95,6 +94,14 @@ const peopleReducer = createSlice({
       state.deckCardSum = [[0, 0, 0], [0, 0, 0]]
       state.playerCardSum = [0, 0]
     },
+    deleteCard(state, action) {
+      console.log(action.payload)
+      console.log('deleteCard', action.payload)
+      state.PeopleObject.PeopleWithStrength.splice(action.payload, 1)
+      state.PeopleObject.Strength.splice(action.payload, 1)
+      state.PeopleObject.StrengthPoints.splice(action.payload, 1)
+      state.PeopleObject.CardNames.splice(action.payload, 1)
+    },
     minusPoints(state) {
       state.playerCardSum[state.currentPlayerNumber] -= --state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber]
     },
@@ -107,4 +114,4 @@ export const requestPeople = () => {
 };
 
 export default peopleReducer.reducer;
-export const { setAllPeople, setPeople, drawCard, nextMove, minusPoints, deleteCard, clear } = peopleReducer.actions;
+export const { setAllPeople, setPeople, drawCard, nextMove, minusPoints, clear, deleteCard } = peopleReducer.actions;
