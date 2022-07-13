@@ -10,12 +10,9 @@ type PropsType = {
   AllCards: AllCardsType
   playerCardSum: Array<Number>
   deckCardSum: Array<Array<Number>>
-  PeopleWithStrength: PeopleWithStrengthType
-  CardNames: Array<string>
-  DeckCardNumber: any,
-  PlayerNumber: any,
+  PeopleWithStrength: Array<PeopleWithStrengthType>
+  PlayerNumber: number,
   isGameOver: boolean,
-  sumOfCurrentHandCards: number,
 }
 
 const People: React.FC<PropsType> = ({
@@ -29,14 +26,14 @@ const People: React.FC<PropsType> = ({
 }) => {
 
   let rand: number = Math.floor(Math.random() * StrengthPoints.length);
-  let currentCard = {} as any
-  currentCard.Points = StrengthPoints[rand]
-  currentCard.Name = PeopleWithStrength[rand].name
+  let currentCard = {} as CurrentCardType
+  currentCard.points = StrengthPoints[rand]
+  currentCard.name = PeopleWithStrength[rand].name
   let dispatch = useDispatch();
 
 
   const onDrawCardButtonClick = (currentCard: CurrentCardType) => {
-    if (isFinite(currentCard.Points)) {
+    if (isFinite(currentCard.points) && !isGameOver) {
       dispatch(drawCard(currentCard))
       dispatch(deleteCard(rand))
     }
@@ -55,7 +52,7 @@ const People: React.FC<PropsType> = ({
         <div className={styles.info}>
           <div>{"Очки игрока №1: " + playerCardSum[0]}</div>
           <div>{"Очки игрока №2: " + playerCardSum[1]}</div>
-          <div>{"Карту тянет игрок №: " + (PlayerNumber + 1)}</div>
+          {!isGameOver && <div>{"Карту тянет игрок №: " + (PlayerNumber + 1)}</div>}
           {isGameOver && <Gameover playerCardSum={playerCardSum} />}
         </div>
         <div className={styles.navbar}>
@@ -92,7 +89,7 @@ const People: React.FC<PropsType> = ({
             Колода {player.indexOf(deck) + 1 + " "}
             игрока {AllCards.indexOf(player) + 1 + " : " + deckCardSum[AllCards.indexOf(player)][player.indexOf(deck)]}
             {deck.map(card => <div className={styles.deck}>
-              {card.Name} {card.Points}
+              {card.name} {card.points}
             </div>)}
             {deckCardSum[AllCards.indexOf(player)][player.indexOf(deck)] > 21 && <div className={styles.bust}>Перебор</div>}
           </div>

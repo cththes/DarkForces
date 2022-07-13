@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
   peopleReducer: peopleReducer,
 });
 
+
 const persistConfig = {
   key: 'root',
   storage

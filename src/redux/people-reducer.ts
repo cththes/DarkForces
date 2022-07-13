@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { peopleAPI } from "../api/api";
 import { AllPeopleType, PeopleWithStrengthType, PlayersType } from "../types/types";
 
+
 const peopleReducer = createSlice({
   name: "peopleReducer",
   initialState: {
@@ -30,7 +31,7 @@ const peopleReducer = createSlice({
       state.PeopleObject.PeopleWithStrength = []
       state.PeopleObject.Strength = []
       state.PeopleObject.CardNames = []
-      state.PeopleObject.AllPeople.forEach((el: any) => {
+      state.PeopleObject.AllPeople.forEach((el: AllPeopleType) => {
         let strength: number = el.mass * el.height;
         if (isFinite(strength)) {
           state.PeopleObject.PeopleWithStrength.push(el);
@@ -47,15 +48,15 @@ const peopleReducer = createSlice({
       });
     },
     drawCard(state, action) {
-      state.currentCard = action.payload.Points;
+      state.currentCard = action.payload.points;
       state.players[state.currentPlayerNumber][state.currentCardDeckNumber].push(action.payload);
-      state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber] += action.payload.Points
-      state.playerCardSum[state.currentPlayerNumber] += action.payload.Points
-      state.sumOfCurrentHandCards += action.payload.Points
+      state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber] += action.payload.points
+      state.playerCardSum[state.currentPlayerNumber] += action.payload.points
+      state.sumOfCurrentHandCards += action.payload.points
       if (state.sumOfCurrentHandCards >= 21) {
-
         if (state.sumOfCurrentHandCards > 21) {
-          state.playerCardSum[state.currentPlayerNumber] -= --state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber]
+          state.playerCardSum[state.currentPlayerNumber] -= state.deckCardSum[state.currentPlayerNumber][state.currentCardDeckNumber]
+          ++state.playerCardSum[state.currentPlayerNumber]
           state.sumOfCurrentHandCards = 0
         }
         state.sumOfCurrentHandCards = 0
@@ -95,8 +96,6 @@ const peopleReducer = createSlice({
       state.playerCardSum = [0, 0]
     },
     deleteCard(state, action) {
-      console.log(action.payload)
-      console.log('deleteCard', action.payload)
       state.PeopleObject.PeopleWithStrength.splice(action.payload, 1)
       state.PeopleObject.Strength.splice(action.payload, 1)
       state.PeopleObject.StrengthPoints.splice(action.payload, 1)
