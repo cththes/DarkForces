@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/DarkForces/static/css/main.16f7f011.css",
-    "main.js": "/DarkForces/static/js/main.66a90e6e.js",
+    "main.css": "/DarkForces/static/css/main.8c1ec2bc.css",
+    "main.js": "/DarkForces/static/js/main.7ab65bb7.js",
     "index.html": "/DarkForces/index.html",
-    "main.16f7f011.css.map": "/DarkForces/static/css/main.16f7f011.css.map",
-    "main.66a90e6e.js.map": "/DarkForces/static/js/main.66a90e6e.js.map"
+    "main.8c1ec2bc.css.map": "/DarkForces/static/css/main.8c1ec2bc.css.map",
+    "main.7ab65bb7.js.map": "/DarkForces/static/js/main.7ab65bb7.js.map"
   },
   "entrypoints": [
-    "static/css/main.16f7f011.css",
-    "static/js/main.66a90e6e.js"
+    "static/css/main.8c1ec2bc.css",
+    "static/js/main.7ab65bb7.js"
   ]
 }
