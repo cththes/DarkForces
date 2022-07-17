@@ -1,4 +1,3 @@
-export type PlayersType = Array<Array<Array<CurrentCardType>>>
 export type AllCardsType = PlayersType
 
 export type AllPeopleType = {
@@ -19,11 +18,45 @@ export type AllPeopleType = {
    edited: string
    url: string
 }
+export type PlayersType = {
+   [key: string]: PlayerTurn
+}
+
+type PlayerTurn = {
+   turns: TurnType
+   strength: number
+}
+
+type PlayerTurnCards = {
+   cards: Array<string>
+   strength: number
+}
+
+type TurnType = {
+   [key: string]: PlayerTurnCards
+}
+
+export type CardNamesType = {
+   [key: string]: string
+}
+
+export type CardWithStrength = AllPeopleType & {
+   strength: number
+}
+
+export type CardType = {
+   [key: string]: CardWithStrength;
+}
+
+export type CurrentTurnType = {
+   turn: string,
+   player: string,
+}
 
 
 
 export type CurrentCardType = {
-   points: number, name: string
+   Strength: number, name: string
 }
 export type PeopleWithStrengthType = AllPeopleType
 export type RequestPeopleResultsType = AllPeopleType

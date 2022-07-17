@@ -4,19 +4,20 @@ import { useDispatch } from "react-redux";
 import { clear, setPeople } from '../../../redux/people-reducer';
 
 type PropsType = {
-   playerCardSum: Array<Number>
+   player1Score: number
+   player2Score: number
 }
 
-const Gameover: React.FC<PropsType> = ({ playerCardSum }) => {
+const Gameover: React.FC<PropsType> = ({ player1Score, player2Score }) => {
    let dispatch = useDispatch();
    let text: string = ""
    const onClearButtonClick = () => {
       dispatch(clear())
       dispatch(setPeople())
    }
-   if (playerCardSum[0] > playerCardSum[1]) text = "Выиграл игрок 1"
-   else if (playerCardSum[1] > playerCardSum[0]) text = "Выиграл игрок 2"
-   else if (playerCardSum[0] === playerCardSum[1]) text = "Ничья"
+   if (player1Score > player2Score) text = "Выиграл игрок 1"
+   else if (player2Score > player1Score) text = "Выиграл игрок 2"
+   else if (player1Score === player2Score) text = "Ничья"
    return (
       <div>
          <div className={styles.gameOverText}>Игра окончена.</div>

@@ -1,4 +1,9 @@
-.App {
-  height: 100vh;
+body {
   background-color: #f0f2f5;
+}
+
+.App {
+  height: 50vh;
+  background-color: #f0f2f5;
+  padding: 15px;
 }
