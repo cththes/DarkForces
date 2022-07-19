@@ -6,9 +6,10 @@ import { clear, setPeople } from '../../../redux/people-reducer';
 type PropsType = {
    player1Score: number
    player2Score: number
+   cardNamesLength: number
 }
 
-const Gameover: React.FC<PropsType> = ({ player1Score, player2Score }) => {
+const Gameover: React.FC<PropsType> = ({ player1Score, player2Score, cardNamesLength }) => {
    let dispatch = useDispatch();
    let text: string = ""
    const onClearButtonClick = () => {
@@ -20,8 +21,11 @@ const Gameover: React.FC<PropsType> = ({ player1Score, player2Score }) => {
    else if (player1Score === player2Score) text = "Ничья"
    return (
       <div>
-         <div className={styles.gameOverText}>Игра окончена.</div>
-         <div className={styles.gameOverText}>{text}</div>
+         <div className={styles.gameOverText}>
+            <div >Игра окончена.</div>
+            <div>{cardNamesLength === 0 && "Закончились карты"}</div>
+            <div>{text}</div>
+         </div>
          <button onClick={() => {
             onClearButtonClick();
          }}

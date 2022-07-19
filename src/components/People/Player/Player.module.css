@@ -1,0 +1,74 @@
+.player {
+  display: flex;
+  min-height: 240px;
+  height: 35vh;
+  min-height: 350px;
+  flex-wrap: wrap;
+}
+
+.deck {
+  width: 80%;
+  background-color: red;
+}
+
+.card_item {
+  width: 13vw;
+}
+
+@media (max-width: 1460px) {
+  .deck {
+    width: 90%;
+  }
+}
+@media (max-width: 1200px) {
+  .player {
+    font-size: calc(13px + 0.1vw);
+    word-wrap: normal;
+  }
+}
+
+@media (max-width: 1000px) {
+  .player {
+    font-size: calc(12.5px + 0.1vw);
+  }
+  .powerLevelText10 {
+    max-width: 130px;
+  }
+}
+
+@media (max-width: 805px) {
+  .player {
+    font-size: calc(1.5vw);
+  }
+}
+@media (max-width: 730px) {
+  .player {
+    font-size: calc(6px + 0.8vw);
+  }
+  .powerLevelText10 {
+    max-width: 118px;
+  }
+}
+
+@media (max-width: 687px) {
+  .powerLevelText10 {
+    max-width: 114px;
+  }
+}
+
+@media (max-width: 560px) {
+  .powerLevelText10 {
+    max-width: 87px;
+  }
+}
+.powerLevelText {
+  width: 92%;
+}
+
+.powerLevelText10 {
+  width: 92%;
+}
+
+.bust {
+  color: red;
+}

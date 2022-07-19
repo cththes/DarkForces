@@ -10,6 +10,7 @@ import {
   CardType
 } from "../../types/types";
 import Gameover from "./Gameover/Gameover";
+import Player from "./Player/Player";
 
 type PropsType = {
   PeopleWithStrength: Array<PeopleWithStrengthType>
@@ -30,15 +31,16 @@ const People: React.FC<PropsType> = ({
   CardNames,
   cardsMap,
   players,
-  isNewGame
+  isNewGame,
 }) => {
 
   let dispatch = useDispatch();
   if (PeopleWithStrength.length === 0) return null
 
+  const cardNamesLength = Object.keys(CardNames).length
 
   const onDrawCardButtonClick = () => {
-    let rand: number = Math.floor(Math.random() * Object.keys(CardNames).length);
+    let rand: number = Math.floor(Math.random() * cardNamesLength);
     const currentCardName = Object.values(CardNames)[rand]
     if (!isGameOver) {
       dispatch(drawCard(currentCardName))
@@ -52,8 +54,6 @@ const People: React.FC<PropsType> = ({
     dispatch(clear())
     dispatch(setPeople())
   }
-  const playerOneTurns = Object.values(players["1"].turns);
-  const playerTwoTurns = Object.values(players["2"].turns);
   return (
     <div className={styles.main_content}>
       <div className={styles.game_content}>
@@ -62,7 +62,7 @@ const People: React.FC<PropsType> = ({
             <div>{"Очки игрока №1: " + players["1"].strength}</div>
             <div>{"Очки игрока №2: " + players["2"].strength}</div>
             {!isGameOver && <div id="playerInfo">{"Карту тянет игрок №: " + (currentTurn.player)}</div>}
-            {isGameOver && <Gameover player1Score={players["1"].strength} player2Score={players["2"].strength} />}
+            {isGameOver && <Gameover player1Score={players["1"].strength} player2Score={players["2"].strength} cardNamesLength={cardNamesLength} />}
           </div>
           <div className={styles.navbar}>
             <button
@@ -95,47 +95,8 @@ const People: React.FC<PropsType> = ({
         </div>
 
         <div className={styles.players}>
-          <div className={styles.player}>{playerOneTurns.map(turn => {
-            return (
-              <div>
-                <div className={styles.deck}><strong>Игрок 1</strong></div>
-                <div>Уровень силы хода: {turn.strength}</div>
-                <div>
-                  {turn.cards.map(card => {
-
-                    return (
-                      <div className={styles.card_item}>
-                        {card} {cardsMap[card].strength}
-                      </div>
-                    )
-                  })}
-                  {turn.strength > 21 && <div className={styles.bust}>Перебор</div>}
-                </div>
-              </div>
-            )
-          })}
-          </div>
-
-          <div className={styles.player}>{playerTwoTurns.map(turn => {
-            return (
-              <div>
-                <div className={styles.deck}><strong>Игрок 2</strong></div>
-                <div>Уровень силы хода: {turn.strength}</div>
-                <div>
-                  {turn.cards.map(card => {
-
-                    return (
-                      <div className={styles.card_item}>
-                        {card} {cardsMap[card].strength}
-                      </div>
-                    )
-                  })}
-                  {turn.strength > 21 && <div className={styles.bust}>Перебор</div>}
-                </div>
-              </div>
-            )
-          })}
-          </div>
+          <Player players={players} playerNumber="1" cardsMap={cardsMap} />
+          <Player players={players} playerNumber="2" cardsMap={cardsMap} />
         </div>
       </div>
       <div className={styles.cardNames}>{Object.values(CardNames).map(CardName => <div className={styles.cardNames_Item}>{CardName}</div>)}</div>

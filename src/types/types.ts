@@ -30,6 +30,7 @@ type PlayerTurn = {
 type PlayerTurnCards = {
    cards: Array<string>
    strength: number
+   bust?: number
 }
 
 type TurnType = {

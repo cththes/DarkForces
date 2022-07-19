@@ -4,22 +4,7 @@
 }
 
 .game_content {
-  width: 80%;
-}
-
-.player {
-  display: flex;
-  min-height: 240px;
-  height: 35vh;
-}
-
-.deck {
-  width: 80%;
-  background-color: red;
-}
-
-.card_item {
-  width: 13vw;
+  width: 82%;
 }
 
 .cardNames {
@@ -29,23 +14,29 @@
 
 .cardNames_Item {
   margin-right: 20px;
-  margin-left: 10px;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 1460px) {
   .cardNames_Item {
     margin-right: 0px;
-    font-size: 1vw;
   }
-  .players {
-    font-size: 1vw;
+  .deck {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1350px) {
+  .levelPower {
+    font-size: calc(2px + 1vw);
   }
 }
 
 .header {
   display: flex;
   height: 25vh;
+  min-height: 110px;
+  min-width: 420px;
 }
 
 .info {
@@ -55,8 +46,4 @@
 .CardDeck {
   font-style: italic;
   font-family: "Comic Sans MS";
-}
-
-.bust {
-  color: red;
 }

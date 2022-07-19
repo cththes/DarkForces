@@ -11,7 +11,7 @@ const CalcStrength = (StrengthArray: Array<number>) => {
   const difference = (maxStrength - minStrength) / 9; //3691.3333333333335
   let StrengthPoints: Array<number> = []
   StrengthArray.forEach((el) => {
-    StrengthPoints.push(Math.floor((el - minStrength) / difference) + 1);
+    StrengthPoints.push(Math.round((el - minStrength) / difference) + 1);
   });
   return StrengthPoints
 }
@@ -24,7 +24,7 @@ const peopleReducer = createSlice({
       AllPeople: [] as Array<AllPeopleType>,
       PeopleWithStrength: [] as Array<PeopleWithStrengthType>, //real Jedi
       Strength: [] as Array<number>, //mass * height
-      CardNames: {} as CardNamesType
+      CardNames: {} as CardNamesType,
     },
     currentTurn: {
       turn: "1",
@@ -92,13 +92,19 @@ const peopleReducer = createSlice({
       if (Object.keys(state.PeopleObject.CardNames).length === 0) {
         state.isGameOver = true
       }
+      if ((state.players["1"].strength > 62) || (state.players["2"].strength > 62)) {
+        state.isGameOver = true
+      }
 
       state.isNoStrength = false
       state.isNewGame = false
 
-      if (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength >= 21) {
-        state.players[state.currentTurn.player].strength -= (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength - 1)
-        state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength -= (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength - 1)
+      if (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength > 20) {
+        if (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength > 21) {
+          state.players[state.currentTurn.player].turns[state.currentTurn.turn].bust = state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength
+          state.players[state.currentTurn.player].strength -= (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength - 1)
+          state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength -= (state.players[state.currentTurn.player].turns[state.currentTurn.turn].strength - 1)
+        }
         if (state.currentTurn.player === "1")
           state.currentTurn.player = "2"
         else {
